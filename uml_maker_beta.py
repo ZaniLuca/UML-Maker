@@ -1,7 +1,7 @@
 import os
 # carichiamo il file all'interno del vettore
 lines = []
-with open("blackjack.py", 'rt') as f:
+with open("flappy_bird.py", 'rt') as f:
     for line in f:
         lines.append(line)
 
@@ -105,10 +105,9 @@ def extract_params(i):
 
     for line in range(len(self_param_lines)):
         param = ""
-        element = self_param_lines[line]  # RIGA CHE ESAMINIAMO
-
-        for char in range(13, len(element)):
-            if element[char] == " " or element[char] == "." or element[char] == "(":
+        element = str(self_param_lines[line].split())  # RIGA CHE ESAMINIAMO
+        for char in range(7, len(element)):
+            if element[char] == " " or element[char] == "." or element[char] == "(" or element[char] == "'":
                 break
             param += element[char]
         params.append(param)
@@ -142,9 +141,9 @@ def extract_methods(i):
 
     for element in range(conta_methods):
         method = ""
-        new_line = methods_lines[element]
-        for lettere in range(8, len(new_line)):
-            if new_line[lettere] == "(":
+        new_line = str(methods_lines[element].split())
+        for lettere in range(9, len(new_line)):
+            if new_line[lettere] == "(" or new_line[lettere] == "'":
                 break
             method += new_line[lettere]
         methods.append(method + '()')
@@ -198,3 +197,58 @@ def recap():
 
 
 recap()
+
+from PIL import Image, ImageDraw, ImageFont
+
+font = ImageFont.truetype(r'C:/Windows/Fonts/Arial.ttf', 20)
+
+n_params = len(params)
+n_methods = len(methods)
+
+width = 300
+row = 35
+#height = row * (len(params) + len(methods)) + row #1 riga in piu per il nome classe
+
+def draw():
+    params_exam = 0  # contatore del numero di parametri esaminati
+    methods_exam = 0  # contatore del numero metodi esaminati
+
+    for i in range(n_class):
+        height = row * (num_params[i] + num_methods[i]) + row
+
+        img = Image.new("RGB", (width, height)) 
+        shape = [(0, 0), (width, row)]
+
+        rect = ImageDraw.Draw(img)
+        rect.rectangle(shape, fill ="#8c8c8c")
+
+        text = str(classes[i])
+        rect.text((width//2-30, 5), text, font = font, align ="center", fill='black')
+
+        for param in range(params_exam, params_exam + num_params[i]):
+            shape = [(0, 35+row*(param-params_exam+1)), (width, 35+(row*(param-params_exam)+1))]
+            rect = ImageDraw.Draw(img)
+
+            rect.rectangle(shape, fill ="white")
+
+            text = str(params[param])
+            rect.text((5, 40+row*(param-params_exam)), text, font = font, align ="center", fill='black')
+
+        # scrivo i metodi di ogni classe
+        for method in range(methods_exam, methods_exam + num_methods[i]):
+
+            shape = [(0, 0+num_params[i]*row+ row*(method-methods_exam+1)), (width, 35+num_params[i]*row+ row*(method-methods_exam+1))]
+            rect = ImageDraw.Draw(img)
+
+            rect.rectangle(shape, fill ="#d9d9d9")
+
+            text = str(methods[method])
+            rect.text((5, 40+num_params[i]*row+ row*(method-methods_exam)), text, font = font, align ="center", fill='black')
+
+        params_exam += num_params[i]
+        methods_exam += num_methods[i]
+        # aumentiamo il contatore con il numero dei parametri e metodi esaminati
+        # cosicchè l'indice salterà la posizione di tali programmi
+        img.show()
+
+draw()
