@@ -16,7 +16,7 @@ To make an uml table simply use the "open file" button, then import the file you
 # Screenshots
 
 ![Main](https://user-images.githubusercontent.com/59318963/72685891-bf0ab980-3aee-11ea-94c8-b1b345daf0ad.PNG)
+### Table Generated
+Tables generated look like this
 
-These are the Tables generated
-![Game](https://user-images.githubusercontent.com/59318963/72685893-c29e4080-3aee-11ea-95b5-458dffb1b60a.png)
 ![Square](https://user-images.githubusercontent.com/59318963/72685894-c4680400-3aee-11ea-988f-d64651ba7bc2.png)
